@@ -1,64 +1,51 @@
 # read2tree 
 
-read2tree is a software tool that allows to obtain alignment matrices for tree inference. For this purpose it makes use of the OMA database and a set of reads. Its strength lies in the fact that it bipasses the several standard steps when obtaining such a matrix in regular analysis. These steps are read filtereing, assembly, gene prediction, gene annotation, all vs all comparison, orthology prediction, alignment and concatination. All this steps are included.
-
-
-## Getting Started
-
-read2tree was build and tested with python 3.5.1. To set up read2tree on your local machine please follow the instructions below.
-
-```
-git clone https://github.com/DessimozLab/read2tree.git
-python setup.py install
-```
+read2tree is a software tool that allows to obtain alignment matrices for tree inference. For this purpose it makes use of the OMA database and a set of reads. Its strength lies in the fact that it bipasses the several standard steps when obtaining such a matrix in regular analysis. These steps are read filtereing, assembly, gene prediction, gene annotation, all vs all comparison, orthology prediction, alignment and concatination. 
 
 
 
-### Prerequisites
 
-read2tree integrates multiple software tools and allows to infer a phylogenetic tree skipping several steps of a usual pipeline such as assembly, annotation and orthology prediction. It offers a fast alternative to usual tree inference pipelines.
+## Prerequisites
 
-The following python packages are needed: [numpy](https://github.com/numpy/numpy), [scipy](https://github.com/scipy/scipy), [Cython](https://github.com/cython/cython), [lxml](https://github.com/lxml/lxml), [tqdm](https://tqdm.github.io/docs/tqdm), [pysam](https://github.com/pysam-developers/pysam), [pyparsing](https://svn.code.sf.net/p/pyparsing/code/), [requests](http://python-requests.org), [filelock](https://github.com/benediktschmitt/py-filelock), [natsort](https://github.com/SethMMorton/natsort), [pyyaml](http://pyyaml.org/wiki/PyYAML), [biopython](https://github.com/biopython/biopython), [ete3](http://etetoolkit.org), [dendropy](http://packages.python.org/DendroPy/).
-
-
-You can install all of them using [conda](https://docs.conda.io/en/latest/miniconda.html).
+The following python packages are needed: [numpy](https://github.com/numpy/numpy), [scipy](https://github.com/scipy/scipy), [cython](https://github.com/cython/cython), [lxml](https://github.com/lxml/lxml), [tqdm](https://tqdm.github.io/docs/tqdm), [pysam](https://github.com/pysam-developers/pysam), [pyparsing](https://svn.code.sf.net/p/pyparsing/code/), [requests](http://python-requests.org), [filelock](https://github.com/benediktschmitt/py-filelock), [natsort](https://github.com/SethMMorton/natsort), [pyyaml](http://pyyaml.org/wiki/PyYAML), [biopython](https://github.com/biopython/biopython), [ete3](http://etetoolkit.org), [dendropy](http://packages.python.org/DendroPy/). You can install all of them using [conda](https://docs.conda.io/en/latest/miniconda.html).
 ```
 conda install -c conda-forge biopython numpy Cython ete3 lxml tqdm scipy pyparsing requests natsort pyyaml
 conda install -c bioconda dendropy 
 ```
 
-Besides, you need softwares including [mafft](http://mafft.cbrc.jp/alignment/software/) (Multiple sequence alignment software), [iqtree](http://www.iqtree.org/) (a software for phylogenomic inference), [ngmlr](https://github.com/philres/ngmlr) and [ngm/nextgenmap](https://github.com/Cibiv/NextGenMap) (long and short read mappers), [samtools](http://www.htslib.org/download/) which could be installed using conda.
+Besides, you need softwares including [mafft](http://mafft.cbrc.jp/alignment/software/) (multiple sequence aligner), [iqtree](http://www.iqtree.org/) (phylogenomic inference), [ngmlr](https://github.com/philres/ngmlr), [ngm/nextgenmap](https://github.com/Cibiv/NextGenMap) (long and short read mappers), and [samtools](http://www.htslib.org/download/) which could be installed using conda.
 ```
 conda install -c bioconda mafft  iqtree ngmlr nextgenmap  samtools
 ```
 
-Finally, for installing [pyham](https://github.com/DessimozLab/pyham)(Library to work with HOGs), [pyoma](https://github.com/DessimozLab/pyoma)(Library for retrieval of nucleotide sequences using  OMA API) use the following:
-
+Finally, for installing [pyham](https://github.com/DessimozLab/pyham)(a library to work with HOGs), [pyoma](https://github.com/DessimozLab/pyoma)(library for retrieval of nucleotide sequences using OMA API) run `pip install pyham` `pip install pyoma` or alternatively:
 ```
 git clone https://github.com/DessimozLab/pyham.git
 python -m pip install -3 ./pyham
-
 git clone https://github.com/DessimozLab/pyoma.git
 python -m pip install -3 ./pyoma
 ```
-or using `pip install pyham` `pip install pyoma`. 
 
 
 
+## Installation
 
-### Installation
-    
+read2tree was build and tested with python 3.5.1. To set up read2tree on your local machine please follow the instructions below.
 
 ```
 git clone https://github.com/DessimozLab/read2tree.git
 cd read2tree
 python setup.py install
-
 ```
 
 
 
-#### Run
+## Run
+
+To run read2tree two things are required as input:
+1) The DNA sequencing reads as FASTQ file(s).
+2) A set of reference orthologous groups, i.e. marker genes. 
+This can be obtained from [OMA browser](https://omabrowser.org/oma/export_markers) export. 
 
 
 ```
@@ -68,12 +55,10 @@ read2tree --standalone_path marker_genes/ --reads read_1.fq read_2.fq  --output_
 
 
 
+## Test example
 
 
-
-#### Running the tests
-
-Once successfully installed you can test the package using:
+You can run the test example as follows:
 ```
 python -W ignore bin/read2tree --standalone_path tests/data/marker_genes/ --reads tests/data/mapper/test3/test_1a.fq tests/data/mapper/test3/test_2a.fq  --output_path test/output/
 
@@ -97,40 +82,32 @@ In the folder 'tests/data/output' you should be able to find the following folde
 | test_1b_all_cov.txt | summary of average numbers of reads used for selected sequences|
 | test_1b_all_sc.txt | summary of average consensus length of reconstructed sequences|
 
-## Running 
 
-To run read2tree two things are required as input:
-1) The reads directly or as SRA or ENA submission index (submission scripts for lsf and sge are porvided (check the scripts folder))
-2) As set of reference orthologous groups from the omabrowser that can be obtained with either the [All vs All](https://omabrowser.org/oma/export/) export or the [marker gene](https://omabrowser.org/oma/export_markers) export. This also means that some beforehand knowledge about the species to place or to add is required
+Note that we consider species names as 5-letter codes e.g. AMPFI= Amphiura filiformis.
 
+For running on clusters, you can run the first step of read2tree such that folders 01, 02 and 03 are computed (this allows for mapping). This can be done using the '--reference' option.  Since read2tree re-orders the OGs into the included species, it is possible to split the mapping step per species using multiple threads for the mapper. For this the '--single_mapping' option is available.
 
 
-* Make sure that species names are clearly labeled by a 5 letter code (e.g. Amphiura filiformis = AMPFI)
-* Needs either OMA standalone export or OMA marker gene export as reference input
-* If you are using your own OMA run the formatting is crucial
+## Change log
 
 
-#### Running on clusters
+- version 0.2
 
-* Run the first step of read2tree such that folders 01, 02 and 03 are computed (this allows for mapping). This can be done using the '--reference' option.
-* Since read2tree re-orders the OGs into the included species, it is possible to split the mapping step per species using multiple threads for the mapper. For this the '--single_mapping' option is available.
+- version 0.1
+Adding covid analysis
 
+- version 0.0
+Initial wokr
 
-## Versioning
-
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
 
 ## Authors
 
-* **David Dylus** - *Initial work* - [dvddylus](https://github.com/dvdylus)
-* Adrian
+* [David Dylus](https://github.com/dvdylus), (main author)
+* [Adrian Altenhoff](http://people.inf.ethz.ch/adriaal).
+* [Sina Majidian](https://github.com/smajidian).
 
-
+The authors would like to thank  Alex Warwick for help how to initiate such a package.
 
 ## License
+This project is licensed under the MIT License.
 
-
-## Acknowledgments
-
-* Alex Warwick for help how to initiate such a package.
-__
