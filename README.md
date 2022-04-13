@@ -45,12 +45,11 @@ python setup.py install
 To run read2tree two things are required as input:
 1) The DNA sequencing reads as FASTQ file(s).
 2) A set of reference orthologous groups, i.e. marker genes. 
-This can be obtained from [OMA browser](https://omabrowser.org/oma/export_markers) export. 
+This can be obtained from [OMA browser](https://omabrowser.org/oma/export_markers). 
 
 
 ```
 read2tree --standalone_path marker_genes/ --reads read_1.fq read_2.fq  --output_path output
-
 ```
 
 
@@ -60,10 +59,10 @@ read2tree --standalone_path marker_genes/ --reads read_1.fq read_2.fq  --output_
 
 You can run the test example as follows:
 ```
-python -W ignore bin/read2tree --standalone_path tests/data/marker_genes/ --reads tests/data/mapper/test3/test_1a.fq tests/data/mapper/test3/test_2a.fq  --output_path test/output/
-
+cd tests
+read2tree --standalone_path marker_genes/ --reads read_1.fq read_2.fq  --output_path output/
 ```
-In the folder 'tests/data/output' you should be able to find the following folders:
+In the folder 'tests/output' you should be able to find the following folders:
 
 | folder/file  | description           | 
 | ------------- |-------------|
