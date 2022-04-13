@@ -92,11 +92,14 @@ For running on clusters, you can run the first step of read2tree such that folde
 
 - version 0.2
 
+
 - version 0.1
+
 Adding covid analysis
 
 - version 0.0
-Initial wokr
+
+Initial work
 
 
 ## Authors
